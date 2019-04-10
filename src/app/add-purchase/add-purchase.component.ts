@@ -35,16 +35,16 @@ export class AddPurchaseComponent implements OnInit {
         const isBigger = this.form.value.title.length > 80;
         const isSmaller = this.form.value.title.length < 3;
 
-        if (isEmpty) {
-            this.titleErrorLog = 'поле обязательно для заполнения';
-        }
-
         if (isBigger) {
             this.titleErrorLog = 'максимальная длина — 80';
         }
 
         if (isSmaller) {
             this.titleErrorLog = 'минимальная длина — 3';
+        }
+        
+         if (isEmpty) {
+            this.titleErrorLog = 'поле обязательно для заполнения';
         }
 
         if (isEmpty || isBigger || isSmaller) {
