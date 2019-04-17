@@ -9,88 +9,64 @@ import {IPurchase} from '../model/ipurchase';
 })
 export class AddPurchaseComponent implements OnInit {
     @Output() addPurchase = new EventEmitter<IPurchase>();
-    public TitleCondition = false;
-    public InputCondition = false;
-    titleErrorLog = '';
-    priceErrorLog = '';
+    ErrorLog = {
+        title: {
+            required: 'поле обязательно для заполнения',
+            minlength: 'минимальная длина — 3',
+            maxlength: 'максимальная длина — 80'
+        },
+        price: {
+            required: 'поле обязательно для заполнения',
+            pattern: 'разрешены лишь цифры',
+            min: 'минимальное значение 10',
+            max: 'максимальное значение 10000'
+        },
+    }
     form: FormGroup;
 
     constructor(private formBuilder: FormBuilder) {}
 
     ngOnInit() {
         this.form = this.formBuilder.group({
-            title: ['', Validators.required],
-            price: [''],
+            title: ['', [
+                Validators.required,
+                Validators.minLength(3),
+                Validators.maxLength(80)
+            ]
+            ],
+            price: ['',[
+                Validators.required,
+                Validators.max(10000),
+                Validators.min(10),
+                Validators.pattern('^[0-9]+$')
+            ]],
             date: [''],
             comment: [''],
         });
 
-        this.form.valueChanges.subscribe(value => {
-            // tslint:disable-next-line:no-console
-            console.log(value);
-        });
     }
-    titleOnInput() {
-        const isEmpty = this.form.value.title.length === 0;
-        const isBigger = this.form.value.title.length > 80;
-        const isSmaller = this.form.value.title.length < 3;
+    getErrorLog(name:string):string{
+        if(name === 'title'){
+            if(!this.form.value.title.length){return this.ErrorLog.title.required}
 
-        if (isBigger) {
-            this.titleErrorLog = 'максимальная длина — 80';
+            if(this.form.value.title.length<3){return this.ErrorLog.title.minlength}
+
+            if(this.form.value.title.length>80){return this.ErrorLog.title.maxlength}
         }
 
-        if (isSmaller) {
-            this.titleErrorLog = 'минимальная длина — 3';
-        }
-        
-         if (isEmpty) {
-            this.titleErrorLog = 'поле обязательно для заполнения';
-        }
+        if(name === 'price'){
+            if(!this.form.value.price){return this.ErrorLog.price.required}
 
-        if (isEmpty || isBigger || isSmaller) {
-            this.TitleCondition = false;
-        } else {
-            this.TitleCondition = true;
-        }
-    }
-    priceOnInput() {
-        const price = parseInt(this.form.value.price, 10);
+            if(this.form.value.price<10){return this.ErrorLog.price.min}
 
-        const isEmpty = !this.form.value.price;
-        const isBigger = price > 10000;
-        const isSmaller = price < 10;
-        const isSymbol = this.form.value.price.search(/\D/) !== -1;
+            if(this.form.value.price>10000){return this.ErrorLog.price.max}
 
-        if (isEmpty) {
-            this.priceErrorLog = 'поле обязательно для заполнения';
+            return this.ErrorLog.price.pattern;
         }
-
-        if (isBigger) {
-            this.priceErrorLog = 'максимальное значение — 10000';
-        }
-
-        if (isSmaller) {
-            this.priceErrorLog = 'минимальное значение — 10';
-        }
-
-        if (isSymbol) {
-            this.priceErrorLog = 'разрешены лишь цифры';
-        }
-
-        if (isSmaller || isBigger || isSymbol || isEmpty) {
-            this.InputCondition = false;
-        } else {
-            this.InputCondition = true;
-        }
-    }
+}
+    
 
     onSubmit() {
-        const isInvalid = !this.TitleCondition && !this.InputCondition;
-
-        if (isInvalid) {
-            return;
-        }
-
         if (!this.form.value.date) {
             this.form.value.date = new Date();
         }

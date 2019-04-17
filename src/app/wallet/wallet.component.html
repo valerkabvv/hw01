@@ -18,8 +18,11 @@
         <tfs-add-purchase (addPurchase)="onAddPurchase($event)"></tfs-add-purchase>
     </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item" *ngFor="let purchase of purchases">
-        <tfs-purchase-preview [purchase]="purchase"></tfs-purchase-preview>
+    <li class="list-group-item" *ngFor="let purchase of purchases, let i = index">
+        <tfs-purchase-preview (click)="onPreviewClick(i)"
+                               [purchase]="purchase"
+                                >
+        </tfs-purchase-preview>
     </li>
   </ul>
   <div class="card-footer text-center">

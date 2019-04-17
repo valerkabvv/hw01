@@ -1,9 +1,9 @@
-<div class="d-flex justify-content-between align-items-center preview-title" (click)="onClick()">
+<div class="d-flex justify-content-between align-items-center preview-title" >
     {{purchase.title}}
     <span class="badge badge-secondary">{{purchase.price | currency:'RUB'}} </span>
 
 </div>
-<div class="d-flex flex-column" *ngIf="ShowFlag">
+<div class="d-flex flex-column" *ngIf="purchase.show">
     <span class="d-block p-2 bg-danger text-white">Дата: {{purchase.date|date}}</span>
     <span class="d-block p-2 bg-dark text-white" *ngIf="purchase.comment">Комментарий: {{purchase.comment}}</span>
 </div>

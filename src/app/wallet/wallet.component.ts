@@ -9,6 +9,7 @@ import {IPurchase} from '../model/ipurchase';
 export class WalletComponent implements OnInit {
     purchases: IPurchase[] = [];
     total = 0;
+    currentPurchase = null;
     isAddPurchaseOpen = true;
 
     constructor() {}
@@ -20,6 +21,24 @@ export class WalletComponent implements OnInit {
 
     toggleAdd() {
         this.isAddPurchaseOpen = !this.isAddPurchaseOpen;
+    }
+
+    onPreviewClick(i:number){
+        if(this.currentPurchase === i){
+            this.currentPurchase=null;
+            this.purchases[i].show=false;
+
+            return;
+        }
+
+        if(this.currentPurchase!==null){
+        this.purchases[this.currentPurchase].show = false;
+        }
+
+        this.currentPurchase = i;
+
+        this.purchases[i].show=true;
+
     }
 
     onAddPurchase(purchase: IPurchase) {

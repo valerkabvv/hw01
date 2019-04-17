@@ -2,14 +2,13 @@
     <div class="form-group">
         <input type="text"
                class="form-control"
-               [class.is-valid]="TitleCondition"
-               [class.is-invalid]="!TitleCondition&& form.get('title').dirty"
+               [class.is-valid]="form.get('title').valid"
+               [class.is-invalid]="form.get('title').invalid && form.get('title').dirty"
                [formControlName]="'title'"
                placeholder="Название"
-               (input)="titleOnInput()"
                >
         <div class="invalid-feedback">
-            {{titleErrorLog}}
+            {{getErrorLog('title')}}
         </div>
         <div class="valid-feedback">
             хорошо
@@ -19,13 +18,12 @@
         <input type="text"
                formControlName="price"
                class="form-control"
-               [class.is-valid]="InputCondition"
-               [class.is-invalid]="!InputCondition&& form.get('price').dirty"
+               [class.is-valid]="form.get('price').valid"
+               [class.is-invalid]="form.get('price').invalid && form.get('price').dirty"
                placeholder="Стоимость"
-               (input)="priceOnInput()"
                >
         <div class="invalid-feedback">
-            {{priceErrorLog}}
+            {{getErrorLog('price')}}
         </div>
         <div class="valid-feedback">
             Хорошо
@@ -49,7 +47,7 @@
     </div>
     <div class="form-group">
         <button type="submit"
-                [disabled]="form.pristine || form.invalid"
+                [disabled]="form.get('price').invalid || form.get('title').invalid"
                 class="btn btn-success btn-block">
             Готово
         </button>
