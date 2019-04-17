@@ -8,6 +8,7 @@ import {IPurchase} from '../../model/ipurchase';
 })
 export class PurchasePreviewComponent implements OnInit {
     @Input() purchase: IPurchase;
+    @Input() showFlag: boolean;
 
     constructor() {}
 

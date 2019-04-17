@@ -26,21 +26,18 @@ export class WalletComponent implements OnInit {
     onPreviewClick(i:number){
         if(this.currentPurchase === i){
             this.currentPurchase=null;
-            this.purchases[i].show=false;
 
             return;
         }
-
-        if(this.currentPurchase!==null){
-        this.purchases[this.currentPurchase].show = false;
-        }
-
+        
         this.currentPurchase = i;
-
-        this.purchases[i].show=true;
 
     }
 
+    isOpen(i:number):boolean{
+        return i === this.currentPurchase
+    }
+    
     onAddPurchase(purchase: IPurchase) {
         this.purchases.unshift(purchase);
         this.total = this.getTotal();

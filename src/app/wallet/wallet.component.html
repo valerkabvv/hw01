@@ -21,6 +21,7 @@
     <li class="list-group-item" *ngFor="let purchase of purchases, let i = index">
         <tfs-purchase-preview (click)="onPreviewClick(i)"
                                [purchase]="purchase"
+                               [showFlag]="isOpen(i)"
                                 >
         </tfs-purchase-preview>
     </li>

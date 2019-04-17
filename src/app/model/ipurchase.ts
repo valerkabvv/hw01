@@ -3,5 +3,4 @@ export interface IPurchase {
     price: number;
     date: Date;
     comment?: string;
-    show?: boolean;
 }
