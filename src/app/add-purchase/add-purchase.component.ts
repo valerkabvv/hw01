@@ -47,19 +47,19 @@ export class AddPurchaseComponent implements OnInit {
     }
     getErrorLog(name:string):string{
         if(name === 'title'){
-            if(!this.form.value.title.length){return this.ErrorLog.title.required}
+            if(!this.form.get(name).errors.requered){return this.ErrorLog.title.required}
 
-            if(this.form.value.title.length<3){return this.ErrorLog.title.minlength}
+            if(this.form.get(name).errors.minlenght){return this.ErrorLog.title.minlength}
 
-            if(this.form.value.title.length>80){return this.ErrorLog.title.maxlength}
+            if(this.form.get(name).errors.maxlenght){return this.ErrorLog.title.maxlength}
         }
 
         if(name === 'price'){
-            if(!this.form.value.price){return this.ErrorLog.price.required}
+            if(!this.form.get(name).errors.requered){return this.ErrorLog.price.required}
 
-            if(this.form.value.price<10){return this.ErrorLog.price.min}
+            if(this.form.get(name).errors.min){return this.ErrorLog.price.min}
 
-            if(this.form.value.price>10000){return this.ErrorLog.price.max}
+            if(this.form.get(name).errors.max){return this.ErrorLog.price.max}
 
             return this.ErrorLog.price.pattern;
         }
